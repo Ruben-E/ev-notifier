@@ -1,8 +1,16 @@
 import config from "config";
 import { Alerter } from "./alerter.js";
 
+let chargePoints: number[] = config.get("chargePoints");
+if (typeof chargePoints == "string") {
+  chargePoints = (chargePoints as String)
+    .split(",")
+    .map((s) => s.trim())
+    .map(Number);
+}
+
 const alerter = new Alerter(
-  config.get("chargePoints"),
+  chargePoints,
   config.get("distance.startLatitude"),
   config.get("distance.startLongitude"),
   config.get("data.chargePoints"),

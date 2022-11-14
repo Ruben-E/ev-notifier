@@ -31,6 +31,8 @@ export class Alerter {
     influxdbPort: number,
     influxdbDatabase: string
   ) {
+    console.log(`[Alerter] Alerting for charge points ${chargePointIds}`);
+
     this.changePointIdsToWatch = chargePointIds;
     this.startLatitude = startLatitude;
     this.startLongitude = startLongitude;

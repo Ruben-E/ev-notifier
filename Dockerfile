@@ -2,6 +2,7 @@ FROM node:alpine
 
 VOLUME [ "/data" ]
 
+ENV CHARGE_POINTS=charge_points
 ENV MAPBOX_TOKEN=mapbox_token
 ENV DISCORD_ID=discord_id
 ENV DISCORD_TOKEN=discord_token

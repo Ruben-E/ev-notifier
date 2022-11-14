@@ -9,3 +9,4 @@ influxdb:
 distance:
   startLatitude: DISTANCE_START_LATITUDE
   startLongitude: DISTANCE_START_LONGITUDE
+chargePoints: CHARGE_POINTS
