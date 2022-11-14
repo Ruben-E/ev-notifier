@@ -1,0 +1,21 @@
+mapbox:
+  token: ""
+  user: rubene01
+  style: cla6e1qo1005l15o47th7ct67
+discord:
+  enabled: true
+  id: ""
+  token: ""
+distance:
+  startLatitude: 0.0
+  startLongitude: 0.0
+influxdb:
+  enabled: true
+  host: "127.0.0.1"
+  port: 8428
+  database: default
+data:
+  chargePoints: ./data/chargepoints.json
+  distances: ./data/distances.json
+chargePoints:
+- 0

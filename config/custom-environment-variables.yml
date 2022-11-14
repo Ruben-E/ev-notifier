@@ -1,0 +1,11 @@
+mapbox:
+  token: MAPBOX_TOKEN
+discord:
+  id: DISCORD_ID
+  token: DISCORD_TOKEN
+influxdb:
+  host: INFLUXDB_HOST
+  port: INFLUXDB_PORT
+distance:
+  startLatitude: DISTANCE_START_LATITUDE
+  startLongitude: DISTANCE_START_LONGITUDE
