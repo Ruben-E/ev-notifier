@@ -53,26 +53,30 @@ export class Alerter {
   async check(): Promise<void> {
     const chargePoints = [];
     for (const chargePointId of this.changePointIdsToWatch) {
-      const chargePointData = await this.getChargePoint(chargePointId);
-      const distance = await this.getDistanceForChargePoint(
-        chargePointId,
-        chargePointData.coordinates.latitude,
-        chargePointData.coordinates.longitude
-      );
+      try {
+        const chargePointData = await this.getChargePoint(chargePointId);
+        const distance = await this.getDistanceForChargePoint(
+          chargePointId,
+          chargePointData.coordinates.latitude,
+          chargePointData.coordinates.longitude
+        );
 
-      const chargePoint: ChargePoint = {
-        id: chargePointId,
-        address: chargePointData.address.streetAndNumber,
-        latitude: chargePointData.coordinates.latitude,
-        longitude: chargePointData.coordinates.longitude,
-        connectors: chargePointData.evses.length,
-        distance: distance,
-        available: chargePointData.evses.filter(
-          (ev: any) => ev.status === "Available"
-        ).length,
-      };
+        const chargePoint: ChargePoint = {
+          id: chargePointId,
+          address: chargePointData.address.streetAndNumber,
+          latitude: chargePointData.coordinates.latitude,
+          longitude: chargePointData.coordinates.longitude,
+          connectors: chargePointData.evses.length,
+          distance: distance,
+          available: chargePointData.evses.filter(
+            (ev: any) => ev.status === "Available"
+          ).length,
+        };
 
-      chargePoints.push(chargePoint);
+        chargePoints.push(chargePoint);
+      } catch (e) {
+        console.log("Could not fetch charge point", e);
+      }
     }
 
     const changedChargePoints = await this.checkChangedChargePoints(
@@ -93,11 +97,15 @@ export class Alerter {
     allChargePoints: ChargePoint[],
     changedChargePoints: ChangedChargePoint[]
   ) {
-    await Promise.all(
-      this.sinks.map((sink) =>
-        sink.export(allChargePoints, changedChargePoints)
-      )
-    );
+    try {
+      await Promise.all(
+        this.sinks.map((sink) =>
+          sink.export(allChargePoints, changedChargePoints)
+        )
+      );
+    } catch (e) {
+      console.log("Could not call sink", e);
+    }
   }
 
   private async checkChangedChargePoints(
